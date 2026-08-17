@@ -17,8 +17,8 @@ if (btnPaste) {
       const text = await navigator.clipboard.readText();
       if (text) urlInput.value = text.trim();
     } catch {
-      btnPaste.textContent = 'Blokir!';
-      setTimeout(() => (btnPaste.textContent = '📋'), 1500);
+      btnPaste.textContent = 'ERR';
+      setTimeout(() => (btnPaste.textContent = '⧉'), 1500);
     }
   });
 }
@@ -60,7 +60,7 @@ function render(data, audioOnly) {
   const items = audioOnly ? data.audio : data.formats;
 
   if (!items || !items.length) {
-    links.innerHTML = '<p style="color:#8b93a7;font-size:0.85rem">Tidak ada format tersedia.</p>';
+    links.innerHTML = '<p style="color:var(--muted-2);font-size:0.75rem">&gt; tidak_ada_format_tersedia</p>';
     return;
   }
 
@@ -73,21 +73,24 @@ function render(data, audioOnly) {
     a.innerHTML =
       '<div><div class="q">' + (audioOnly ? 'MP3' : (f.quality || 'Video')) + '</div>' +
       '<div class="s">' + [f.ext ? f.ext.toUpperCase() : '', fmtBytes(f.filesize)].filter(Boolean).join(' • ') + '</div></div>' +
-      '<span class="ic">' + (audioOnly ? '🎵' : '⬇️') + '</span>';
+      '<span class="ic">' + (audioOnly ? '♪' : '↓') + '</span>';
     links.appendChild(a);
   });
 }
 
-function showError(msg) {
+function showError(msg, neutral) {
   errorBox.classList.remove('hidden');
   resultBox.classList.add('hidden');
+  errorBox.style.borderColor = neutral ? 'var(--border-strong)' : 'rgba(255,85,85,.4)';
+  errorBox.style.color = neutral ? 'var(--muted)' : 'var(--error)';
+  errorBox.style.background = neutral ? 'rgba(0,255,65,.03)' : 'rgba(255,85,85,.05)';
   document.getElementById('error-text').textContent = msg;
 }
 
 function showLoading() {
   btnSubmit.disabled = true;
   btnLabel.innerHTML = '<span class="spinner"></span>';
-  showError('Memproses link, mohon tunggu beberapa detik...');
+  showError('Memproses link, mohon tunggu beberapa detik...', true);
 }
 
 async function fetchAndRender(endpoint, url, audioOnly) {

@@ -3,48 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Media Downloader — Download video dari YouTube, Instagram, Facebook, TikTok, X</title>
+  <title>Media Downloader — YouTube, Instagram, Facebook, TikTok, X</title>
   <meta name="description" content="Download video dan audio dari YouTube, Instagram, Facebook, TikTok, dan X (Twitter). Gratis, tanpa login.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ff41' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>">
 </head>
 <body>
+  <div class="statusbar">
+    <span><span class="ok">SYSTEM ONLINE</span> &middot; MEDIA_DOWNLOADER v2.0</span>
+    <span>NODE: 3000 &middot; RATE: 60/MIN &middot; UPTIME: ALIVE</span>
+  </div>
+
   <header>
-    <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Media Downloader
-    </div>
+    <div class="logo">~/media-downloader<span class="cursor"></span></div>
     <nav>
-      <a href="#cara">Cara pakai</a>
-      <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">API Docs</a>
+      <a href="#cara">cara_pakai</a>
+      <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">api_docs</a>
     </nav>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <p class="kicker">Gratis — tanpa login — tanpa watermark</p>
-      <h1>Download video &amp; musik <span class="dim">dari mana saja.</span></h1>
+      <pre class="ascii">
+  __  __ _____ ____  _   _   ____  _                _                 _             
+ |  \/  |  ___|  _ \| | | | |  _ \| |    ___   __ _| |_ ___  _ __ __ _| |_ ___  _ __ 
+ | |\/| | |_  | | | | |_| | | | | | |   / _ \ / _` | __/ _ \| '__/ _` | __/ _ \| '__|
+ | |  | |  _| | |_| |  _  | | |_| | |__| (_) | (_| | || (_) | | | (_| | || (_) | |   
+ |_|  |_|_|   |____/|_| |_| |____/|_____\___/ \__, |\__\___/|_|  \__,_|\__\___/|_|   
+                                              |___/                                   
+      </pre>
+      <p class="prompt"><span class="user">guest@zunndev</span>:<span class="path">~</span>$ ./download --help</p>
+      <h1>Download video &amp; musik<br>dari semua platform<span class="cursor"></span></h1>
       <p>YouTube, Instagram, Facebook, TikTok, X (Twitter). Tempel link, pilih kualitas, selesai.</p>
 
       <form id="dl-form" class="search">
-        <input type="url" id="url" placeholder="Tempel link video..." required autocomplete="off">
+        <span class="prompt-sign">&gt;</span>
+        <input type="url" id="url" placeholder="tempel_link_disini..." required autocomplete="off">
         <button type="button" class="paste-btn" id="btn-paste" title="Tempel dari clipboard">⧉</button>
         <button type="submit" id="btn-submit"><span id="btn-label">Download</span></button>
       </form>
 
       <div class="actions">
-        <button type="button" class="ghost-btn" id="btn-mp3">Konversi ke MP3</button>
-        <span class="hint">60 request/menit per IP</span>
+        <button type="button" class="ghost-btn" id="btn-mp3">--mp3</button>
+        <span class="hint">[ rate_limit: 60/min per IP ]</span>
       </div>
 
       <div class="platforms">
-        <span class="plat"><svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>YouTube</span>
-        <span class="plat"><svg viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9ce34"/><stop offset=".5" stop-color="#ee2a7b"/><stop offset="1" stop-color="#6228d7"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 2c-3.1 0-3.5 0-4.7.1-1.1.1-1.5.2-1.8.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.3-.2.7-.3 1.8-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.5.3 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.1.7.2 1.8.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.5-.2 1.8-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.3.2-.7.3-1.8.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.5-.3-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.1-.7-.2-1.8-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 9a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm6.4-9.2a1.3 1.3 0 1 1-2.6 0 1.3 1.3 0 0 1 2.6 0z"/></svg>Instagram</span>
-        <span class="plat"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4h-3V12h3V9.4c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg>Facebook</span>
-        <span class="plat"><svg viewBox="0 0 24 24"><path fill="#25F4EE" d="M16.6 5.8A4.8 4.8 0 0 1 15.3 2h-3.4v13.6a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.3a6.3 6.3 0 0 0-.9-.1 6.3 6.3 0 1 0 6.3 6.3V9.5a8 8 0 0 0 4.6 1.5V7.6a4.8 4.8 0 0 1-3.3-1.8z"/><path fill="#FE2C55" d="M16.6 5.8a4.8 4.8 0 0 1-1.3-3.8h-3.4v13.6a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.3a6.3 6.3 0 0 0-.9-.1 6.3 6.3 0 1 0 6.3 6.3V9.5a8 8 0 0 0 4.6 1.5V7.6a4.8 4.8 0 0 1-3.3-1.8z"/></svg>TikTok</span>
-        <span class="plat"><svg viewBox="0 0 24 24" fill="#e7e9ea"><path d="M18.9 1.2h3.7l-8.1 9.3L24 22.8h-7.5l-5.9-7.7-6.7 7.7H.2l8.7-9.9L0 1.2h7.7l5.3 7 6.9-7zm-1.3 19.4h2L6.6 3.3h-2.2l13.2 17.3z"/></svg>X / Twitter</span>
+        <span class="plat">youtube</span>
+        <span class="plat">instagram</span>
+        <span class="plat">facebook</span>
+        <span class="plat">tiktok</span>
+        <span class="plat">x_twitter</span>
       </div>
     </section>
 
@@ -60,30 +71,30 @@
     </section>
 
     <section id="error" class="alert hidden">
-      <span>!</span><p id="error-text"></p>
+      <p id="error-text"></p>
     </section>
 
     <section class="steps" id="cara">
       <div class="step">
-        <p class="n">Langkah 01</p>
-        <h3>Salin link</h3>
+        <p class="n">copy_link</p>
+        <h3>Salin link video</h3>
         <p>Tekan tombol bagikan di aplikasi, pilih "salin tautan".</p>
       </div>
       <div class="step">
-        <p class="n">Langkah 02</p>
-        <h3>Tempel &amp; download</h3>
-        <p>Tempel link di kotak di atas, klik Download.</p>
+        <p class="n">paste</p>
+        <h3>Tempel &amp; jalankan</h3>
+        <p>Tempel link di kotak terminal di atas, klik Download.</p>
       </div>
       <div class="step">
-        <p class="n">Langkah 03</p>
-        <h3>Simpan</h3>
-        <p>Pilih kualitas video atau MP3 yang kamu mau.</p>
+        <p class="n">save</p>
+        <h3>Simpan hasil</h3>
+        <p>Pilih kualitas video atau jalankan --mp3.</p>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>Media Downloader &middot; <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">API docs</a> &middot; <a href="https://zunndev.my.id/api/openapi.json" target="_blank" rel="noopener">OpenAPI</a></p>
+    <p>MEDIA_DOWNLOADER v2.0 &middot; <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">api_docs</a> &middot; <a href="https://zunndev.my.id/api/redoc" target="_blank" rel="noopener">redoc</a> &middot; <a href="https://zunndev.my.id/api/openapi.json" target="_blank" rel="noopener">openapi.json</a></p>
   </footer>
 
   <script src="app.js"></script>

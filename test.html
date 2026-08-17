@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API Docs — Media Downloader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     .ep {
@@ -14,113 +14,130 @@
       align-items: center;
       gap: 1rem;
       padding: 0.8rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.8rem;
     }
     .ep:last-child { border-bottom: none; }
-    .ep code { color: var(--text); font-size: 0.82rem; }
+    .ep code { color: var(--text); font-size: 0.78rem; }
     .m {
       display: inline-block;
       width: 52px;
       text-align: center;
       padding: 0.12rem 0.4rem;
-      border-radius: 5px;
+      border-radius: 4px;
       font-weight: 700;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       margin-right: 0.6rem;
-      color: #09090b;
+      border: 1px solid var(--border-strong);
+      color: var(--green);
+      background: rgba(0, 255, 65, 0.06);
     }
-    .m.post { background: #4ade80; }
-    .m.get { background: #60a5fa; }
+    .m.post::before { content: 'POST '; }
+    .m.get::before { content: 'GET  '; }
+    .m.post, .m.get { width: auto; }
     .field { width: 100%; margin-bottom: 0.8rem; }
     select, input {
       width: 100%;
       padding: 0.6rem 0.75rem;
-      border-radius: 9px;
-      border: 1px solid var(--border-strong);
-      background: var(--panel-2);
-      color: var(--text);
-      font-size: 0.88rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(0, 255, 65, 0.04);
+      color: var(--green);
+      font-size: 0.8rem;
       font-family: inherit;
       outline: none;
+      text-shadow: 0 0 6px rgba(0, 255, 65, 0.4);
     }
-    select:focus, input:focus { border-color: var(--muted-2); }
+    select:focus, input:focus { border-color: var(--border-strong); }
+    select option { background: #000; color: var(--green); }
     .row2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.75rem; }
     .btn {
-      border: none;
+      border: 1px solid var(--border-strong);
       cursor: pointer;
-      background: var(--accent);
-      color: #09090b;
-      font-weight: 600;
-      font-size: 0.88rem;
+      background: transparent;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.8rem;
       font-family: inherit;
       padding: 0.65rem 1.4rem;
-      border-radius: 9px;
+      border-radius: 6px;
       width: 100%;
-      transition: opacity 0.15s;
+      transition: all 0.15s;
     }
-    .btn:hover { opacity: 0.85; }
+    .btn:hover { background: var(--green); color: #000; text-shadow: none; }
     .btn:disabled { opacity: 0.5; cursor: wait; }
     .curl {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: 9px;
+      background: rgba(0, 255, 65, 0.03);
+      border: 1px dashed var(--border);
+      border-radius: 6px;
       padding: 0.8rem;
-      font-size: 0.75rem;
-      font-family: ui-monospace, monospace;
-      color: #a1a1aa;
+      font-size: 0.72rem;
+      color: var(--muted);
       overflow-x: auto;
       white-space: pre-wrap;
       word-break: break-word;
       margin-bottom: 1rem;
     }
     pre {
-      background: var(--panel-2);
+      background: rgba(0, 255, 65, 0.03);
       border: 1px solid var(--border);
-      border-radius: 9px;
+      border-radius: 6px;
       padding: 1rem;
       overflow-x: auto;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       line-height: 1.55;
-      color: #a1a1aa;
+      color: var(--muted);
       white-space: pre-wrap;
       word-break: break-word;
       max-height: 420px;
       overflow-y: auto;
     }
-    .sb { font-weight: 600; padding: 0.15rem 0.6rem; border-radius: 5px; font-size: 0.78rem; margin-bottom: 0.75rem; display: inline-block; border: 1px solid var(--border-strong); }
-    h2 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.9rem; }
-    .doc-link { font-size: 0.85rem; }
-    .doc-link a { color: var(--text); }
+    .sb {
+      font-weight: 700;
+      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+      border: 1px solid var(--border-strong);
+      color: var(--green);
+    }
+    h2 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.9rem; }
+    h2::before { content: '> '; color: var(--muted-2); }
+    .doc-link { font-size: 0.8rem; }
+    .doc-link a { color: var(--green); }
+    .err { color: var(--error) !important; }
   </style>
 </head>
 <body>
+  <div class="statusbar">
+    <span><span class="ok">SYSTEM ONLINE</span> &middot; API_DOCS</span>
+    <span>BASE: zunndev.my.id</span>
+  </div>
+
   <header>
-    <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Media Downloader
-    </div>
+    <div class="logo">~/api-docs<span class="cursor"></span></div>
     <nav>
-      <a href="index.html">&larr; Downloader</a>
+      <a href="index.html">&larr; downloader</a>
     </nav>
   </header>
 
   <main class="wrap">
     <section class="card">
-      <h2>Endpoint</h2>
-      <div class="ep"><span><span class="m post">POST</span><code>/api/download</code></span><span style="color:#565b64">deteksi otomatis</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/download?url=...</code></span><span style="color:#565b64">query param</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/yt?url=...</code></span><span style="color:#565b64">YouTube</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/ig?url=...</code></span><span style="color:#565b64">Instagram</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/fb?url=...</code></span><span style="color:#565b64">Facebook</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/tt?url=...</code></span><span style="color:#565b64">TikTok</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/x?url=...</code></span><span style="color:#565b64">X / Twitter</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/mp3?url=...</code></span><span style="color:#565b64">audio MP3</span></div>
-      <p class="doc-link" style="margin-top:1rem"><a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">Dokumentasi interaktif (Swagger UI) &rarr;</a></p>
+      <h2>ENDPOINTS</h2>
+      <div class="ep"><span><span class="m post"></span><code>/api/download</code></span><span style="color:var(--muted-2)">deteksi otomatis</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/download?url=...</code></span><span style="color:var(--muted-2)">query param</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/yt?url=...</code></span><span style="color:var(--muted-2)">youtube</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/ig?url=...</code></span><span style="color:var(--muted-2)">instagram</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/fb?url=...</code></span><span style="color:var(--muted-2)">facebook</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/tt?url=...</code></span><span style="color:var(--muted-2)">tiktok</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/x?url=...</code></span><span style="color:var(--muted-2)">x_twitter</span></div>
+      <div class="ep"><span><span class="m get"></span><code>/api/mp3?url=...</code></span><span style="color:var(--muted-2)">audio</span></div>
+      <p class="doc-link" style="margin-top:1rem"><a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">swagger_ui &rarr;</a> &middot; <a href="https://zunndev.my.id/api/redoc" target="_blank" rel="noopener">redoc &rarr;</a></p>
     </section>
 
     <section class="card">
-      <h2>Uji coba</h2>
+      <h2>TEST_TERMINAL</h2>
       <div class="row2">
         <div class="field">
           <select id="endpoint">
@@ -137,16 +154,16 @@
           <input type="url" id="turl" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
         </div>
       </div>
-      <button class="btn" id="btn-test">Kirim request</button>
+      <button class="btn" id="btn-test">$ ./curl --send</button>
       <p class="curl" id="curl-example" style="margin-top:0.9rem"></p>
       <div id="test-result">
-        <p style="color:#565b64;font-size:0.8rem">Belum ada request.</p>
+        <p style="color:var(--muted-2);font-size:0.72rem">&gt; belum_ada_request</p>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>Media Downloader API &middot; 60 request/menit per IP</p>
+    <p>MEDIA_DOWNLOADER API &middot; rate_limit: 60/min per IP</p>
   </footer>
 
   <script>
@@ -171,8 +188,8 @@
       const btn = document.getElementById('btn-test');
       const out = document.getElementById('test-result');
       btn.disabled = true;
-      btn.textContent = 'Mengirim...';
-      out.innerHTML = '<p style="color:#565b64">Memproses...</p>';
+      btn.textContent = '$ processing...';
+      out.innerHTML = '<p style="color:var(--muted-2);font-size:0.72rem">&gt; memproses<span class="cursor" style="display:inline-block;width:.5em;height:.9em;background:var(--green);vertical-align:text-bottom;animation:blink 1.1s step-end infinite"></span></p>';
       try {
         let res;
         if (ep === 'download') {
@@ -189,10 +206,10 @@
           '<span class="sb">HTTP ' + res.status + '</span>' +
           '<pre>' + escapeHtml(JSON.stringify(body, null, 2)) + '</pre>';
       } catch (e) {
-        out.innerHTML = '<pre style="color:#f87171">Error: ' + escapeHtml(e.message) + '</pre>';
+        out.innerHTML = '<pre class="err">ERROR: ' + escapeHtml(e.message) + '</pre>';
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Kirim request';
+        btn.textContent = '$ ./curl --send';
       }
     });
 
