@@ -3,53 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Media Downloader - Download Video IG, FB, TikTok, X, YouTube</title>
-  <meta name="description" content="Download video dan audio gratis dari Instagram, Facebook, TikTok, X (Twitter), dan YouTube tanpa login.">
+  <title>Media Downloader - Download Video YouTube, Instagram, Facebook, TikTok, X</title>
+  <meta name="description" content="Download video dan audio gratis dari YouTube, Instagram, Facebook, TikTok, dan X (Twitter). Cepat, gratis, tanpa login.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Media<span>Downloader</span></h1>
-    <p>Download video &amp; audio dari Instagram, Facebook, TikTok, X, dan YouTube — gratis, tanpa login.</p>
-    <p style="margin-top:0.75rem"><a href="test.html" style="color:#818cf8;font-weight:600">Uji Coba API &amp; Dokumentasi &rarr;</a></p>
+    <div class="logo">Media<em>Downloader</em></div>
+    <nav><a href="test.html">API Docs</a></nav>
   </header>
 
-  <main>
-    <section class="card">
-      <form id="dl-form">
-        <input type="url" id="url" name="url" placeholder="Tempel link di sini..." required>
-        <div class="buttons">
-          <button type="submit" class="btn primary" id="btn-submit">Download</button>
-          <button type="button" class="btn" data-type="mp3" title="Ekstrak audio jadi MP3">MP3</button>
-        </div>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Download Video &amp; Musik<br>dari Semua Platform <em>Gratis</em></h1>
+      <p>Tempel link, klik download. Tanpa login, tanpa watermark, tanpa batasan.</p>
+
+      <form id="dl-form" class="search">
+        <input type="url" id="url" placeholder="Tempel link video di sini..." required>
+        <button type="submit" id="btn-submit">Download</button>
       </form>
+
+      <div class="audio-row">
+        <button type="button" id="btn-mp3" class="mp3-btn">Konversi ke MP3</button>
+      </div>
+
       <div class="platforms">
-        <span class="tag yt">YouTube</span>
-        <span class="tag ig">Instagram</span>
-        <span class="tag fb">Facebook</span>
-        <span class="tag tt">TikTok</span>
-        <span class="tag x">X / Twitter</span>
+        <span class="plat"><span class="dot yt"></span>YouTube</span>
+        <span class="plat"><span class="dot ig"></span>Instagram</span>
+        <span class="plat"><span class="dot fb"></span>Facebook</span>
+        <span class="plat"><span class="dot tt"></span>TikTok</span>
+        <span class="plat"><span class="dot x"></span>X / Twitter</span>
       </div>
     </section>
 
     <section id="result" class="card hidden">
-      <div class="result-head">
+      <div class="result-top">
         <img id="thumb" alt="thumbnail" onerror="this.style.display='none'">
-        <div class="result-info">
+        <div>
           <h2 id="title"></h2>
-          <p id="meta"></p>
+          <p class="meta" id="meta"></p>
         </div>
       </div>
-      <div id="links"></div>
+      <div id="links" class="qlist"></div>
     </section>
 
-    <section id="error" class="card error hidden">
+    <section id="error" class="alert hidden">
       <p id="error-text"></p>
     </section>
-  </main>
+
+    <section class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Salin Link</h3>
+        <p>Tekan tombol bagikan di aplikasi, pilih salin tautan</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Tempel &amp; Download</h3>
+        <p>Tempel link di kotak di atas, klik download</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Simpan</h3>
+        <p>Pilih kualitas video atau audio MP3 yang kamu mau</p>
+      </div>
+    </section>
+  </div>
 
   <footer>
-    <p>API: 20 request/menit per IP. Jika error, coba lagi beberapa saat.</p>
+    <p>Media Downloader &mdash; gratis, tanpa login. Rate limit 20 request/menit per IP.</p>
   </footer>
 
   <script src="app.js"></script>

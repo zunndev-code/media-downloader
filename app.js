@@ -3,8 +3,11 @@ const API_BASE = 'https://mediaapi-99cc9.containers.snapdeploy.app';
 const form = document.getElementById('dl-form');
 const urlInput = document.getElementById('url');
 const btnSubmit = document.getElementById('btn-submit');
+const btnMp3 = document.getElementById('btn-mp3');
 const resultBox = document.getElementById('result');
 const errorBox = document.getElementById('error');
+
+let lastPayload = null;
 
 function detectPlatform(url) {
   try {
@@ -21,7 +24,7 @@ function detectPlatform(url) {
 function fmtBytes(n) {
   if (!n) return '';
   const mb = n / 1024 / 1024;
-  return mb > 1024 ? (mb / 1024).toFixed(1) + ' GB' : mb.toFixed(0) + ' MB';
+  return mb > 1024 ? (mb / 1024).toFixed(1) + ' GB' : (mb >= 1 ? mb.toFixed(1) : Math.round(mb * 1024)) + (mb >= 1 ? ' MB' : ' KB');
 }
 
 function fmtTime(s) {
@@ -34,23 +37,30 @@ function render(data, audioOnly) {
   resultBox.classList.remove('hidden');
   errorBox.classList.add('hidden');
   document.getElementById('thumb').src = data.thumbnail || '';
-  document.getElementById('title').textContent = data.title;
+  document.getElementById('title').textContent = data.title || 'Tanpa judul';
   document.getElementById('meta').textContent =
     [data.uploader, fmtTime(data.duration), data.platform].filter(Boolean).join(' • ');
 
   const links = document.getElementById('links');
   links.innerHTML = '';
-
   const items = audioOnly ? data.audio : data.formats;
-  items.forEach((f, i) => {
-    const div = document.createElement('div');
-    div.className = 'link';
-    const label = audioOnly
-      ? (i === 0 ? 'MP3 (kualitas terbaik)' : 'MP3 ' + (f.abr ? f.abr.toFixed(0) + ' kbps' : ''))
-      : (i === 0 ? 'Video (kualitas terbaik)' : (f.height ? f.height + 'p' : '') + ' ' + (f.ext || ''));
-    const size = fmtBytes(f.filesize || f.filesize_approx);
-    div.innerHTML = '<span class="lbl">' + label + '</span><a href="' + f.url + '" target="_blank" rel="noopener">' + (size || 'Download') + '</a>';
-    links.appendChild(div);
+
+  if (!items || !items.length) {
+    links.innerHTML = '<p style="color:#8b93a7;font-size:0.85rem">Tidak ada format tersedia.</p>';
+    return;
+  }
+
+  items.forEach(f => {
+    const a = document.createElement('a');
+    a.className = 'qbtn' + (audioOnly ? ' mp3' : '');
+    a.href = f.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML =
+      '<div><div class="q">' + (audioOnly ? 'MP3' : (f.quality || 'Video')) + '</div>' +
+      '<div class="s">' + [f.ext ? f.ext.toUpperCase() : '', fmtBytes(f.filesize)].filter(Boolean).join(' • ') + '</div></div>' +
+      '<span class="ic">' + (audioOnly ? '🎵' : '⬇️') + '</span>';
+    links.appendChild(a);
   });
 }
 
@@ -60,17 +70,14 @@ function showError(msg) {
   document.getElementById('error-text').textContent = msg;
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const url = urlInput.value.trim();
-  const type = e.submitter && e.submitter.dataset.type ? e.submitter.dataset.type : null;
-  const endpoint = type || detectPlatform(url);
-
+function showLoading() {
   btnSubmit.disabled = true;
   btnSubmit.textContent = 'Memproses...';
-  showError('Memproses link, mohon tunggu...');
-  errorBox.classList.remove('hidden');
+  showError('Memproses link, mohon tunggu beberapa detik...');
+}
 
+async function fetchAndRender(endpoint, url, audioOnly) {
+  showLoading();
   try {
     const res = await fetch(API_BASE + '/api/' + endpoint + '?url=' + encodeURIComponent(url));
     const body = await res.json();
@@ -78,11 +85,25 @@ form.addEventListener('submit', async (e) => {
       const e = body.error || {};
       throw new Error(e.message || 'Gagal memproses link.');
     }
-    render(body.data, type === 'mp3');
+    render(body.data, audioOnly);
+    lastPayload = { endpoint, url, audioOnly };
   } catch (err) {
     showError(err.message);
   } finally {
     btnSubmit.disabled = false;
     btnSubmit.textContent = 'Download';
   }
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const url = urlInput.value.trim();
+  if (!url) return;
+  fetchAndRender(detectPlatform(url), url, false);
+});
+
+btnMp3.addEventListener('click', () => {
+  const url = urlInput.value.trim();
+  if (!url) return;
+  fetchAndRender('mp3', url, true);
 });

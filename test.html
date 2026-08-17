@@ -3,52 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test API - Media Downloader API</title>
+  <title>API Docs - Media Downloader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    nav { display: flex; gap: 1rem; justify-content: center; padding: 1rem 0 0; }
-    nav a { color: #818cf8; text-decoration: none; font-weight: 600; }
-    nav a:hover { text-decoration: underline; }
-    .method { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 6px; font-weight: 800; font-size: 0.75rem; margin-right: 0.5rem; }
-    .method.post { background: #4ade80; color: #0f172a; }
-    .method.get { background: #38bdf8; color: #0f172a; }
-    .endpoint-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(148,163,184,0.15); font-size: 0.9rem; }
-    .endpoint-row code { color: #c7d2fe; }
-    select, textarea { width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid #475569; background: #1e293b; color: #f1f5f9; font-size: 0.95rem; font-family: inherit; margin-bottom: 0.75rem; }
-    textarea { min-height: 60px; resize: vertical; }
-    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-    pre { background: #0f172a; border: 1px solid rgba(148,163,184,0.2); border-radius: 10px; padding: 1rem; overflow-x: auto; font-size: 0.8rem; line-height: 1.5; color: #a5b4fc; white-space: pre-wrap; word-break: break-word; }
-    .curl { background: #1e293b; color: #86efac; font-size: 0.78rem; }
-    .status-badge { font-weight: 800; padding: 0.15rem 0.6rem; border-radius: 6px; font-size: 0.8rem; }
-    .status-2xx { background: #14532d; color: #4ade80; }
-    .status-other { background: #7f1d1d; color: #fca5a5; }
+    .ep {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .ep code { color: #c7d2fe; font-size: 0.8rem; }
+    .m {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.68rem;
+      margin-right: 0.5rem;
+      color: #0b0f1a;
+    }
+    .m.post { background: #4ade80; }
+    .m.get { background: #38bdf8; }
+    select, input {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+      margin-bottom: 0.75rem;
+      outline: none;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+    .row2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.75rem; }
+    @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+    .btn {
+      border: none;
+      cursor: pointer;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      font-family: inherit;
+      padding: 0.85rem 2rem;
+      border-radius: 12px;
+      width: 100%;
+      transition: filter 0.2s, transform 0.1s;
+    }
+    .btn:hover { filter: brightness(1.12); }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .curl {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: #86efac;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 1rem;
+    }
+    pre {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: #a5b4fc;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .sb { font-weight: 800; padding: 0.15rem 0.6rem; border-radius: 6px; font-size: 0.78rem; margin-bottom: 0.75rem; display: inline-block; }
+    .sb.ok { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    .sb.bad { background: rgba(255, 77, 141, 0.15); color: #ffb3cc; }
+    h2 { font-size: 1.05rem; margin-bottom: 0.75rem; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Test <span>API</span></h1>
-    <p>Uji endpoint REST Media Downloader langsung dari sini.</p>
+    <div class="logo">Media<em>Downloader</em></div>
+    <nav><a href="index.html">&larr; Downloader</a></nav>
   </header>
-  <nav>
-    <a href="index.html">&larr; Kembali ke Downloader</a>
-  </nav>
 
-  <main>
+  <div class="wrap">
     <section class="card">
-      <h2 style="margin-bottom:0.75rem">Dokumentasi Endpoint</h2>
-      <div class="endpoint-row"><span><span class="method post">POST</span><code>/api/download</code></span><span>deteksi platform otomatis</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/download?url=...</code></span><span>sama, via query</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/yt?url=...</code></span><span>YouTube</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/ig?url=...</code></span><span>Instagram</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/fb?url=...</code></span><span>Facebook</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/tt?url=...</code></span><span>TikTok</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/x?url=...</code></span><span>X / Twitter</span></div>
-      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/mp3?url=...</code></span><span>ekstrak audio</span></div>
+      <h2>REST API Endpoint</h2>
+      <div class="ep"><span><span class="m post">POST</span><code>/api/download</code></span><span style="color:#8b93a7">deteksi otomatis</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/download?url=...</code></span><span style="color:#8b93a7">query param</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/yt?url=...</code></span><span style="color:#8b93a7">YouTube</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/ig?url=...</code></span><span style="color:#8b93a7">Instagram</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/fb?url=...</code></span><span style="color:#8b93a7">Facebook</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/tt?url=...</code></span><span style="color:#8b93a7">TikTok</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/x?url=...</code></span><span style="color:#8b93a7">X / Twitter</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/mp3?url=...</code></span><span style="color:#8b93a7">audio MP3</span></div>
     </section>
 
     <section class="card">
-      <h2 style="margin-bottom:0.75rem">Uji Coba</h2>
+      <h2>Uji Coba Langsung</h2>
       <div class="row2">
         <select id="endpoint">
           <option value="download">POST /api/download</option>
@@ -59,23 +123,20 @@
           <option value="x">GET /api/x</option>
           <option value="mp3">GET /api/mp3</option>
         </select>
-        <input type="url" id="turl" placeholder="https://youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <input type="url" id="turl" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
       </div>
-      <div class="buttons">
-        <button class="btn primary" id="btn-test" onclick="runTest()">Kirim Request</button>
-      </div>
-      <p class="curl" id="curl-example" style="margin-top:0.75rem;padding:0.6rem 0.8rem;border-radius:8px"></p>
+      <button class="btn" id="btn-test">Kirim Request</button>
+      <p class="curl" id="curl-example" style="margin-top:0.9rem"></p>
       <div id="test-result">
-        <p style="color:#94a3b8;font-size:0.85rem">Belum ada request. Klik "Kirim Request".</p>
+        <p style="color:#8b93a7;font-size:0.8rem">Belum ada request.</p>
       </div>
     </section>
-  </main>
+  </div>
 
   <footer>
-    <p>API: 20 request/menit per IP.</p>
+    <p>Media Downloader API &mdash; 20 request/menit per IP.</p>
   </footer>
 
-  <script src="app.js"></script>
   <script>
     const API_BASE_JS = 'https://mediaapi-99cc9.containers.snapdeploy.app';
 
@@ -88,22 +149,18 @@
       return 'curl "' + API_BASE_JS + '/api/' + ep + '?url=' + encodeURIComponent(url) + '"';
     }
 
-    document.getElementById('endpoint').addEventListener('change', () => {
-      document.getElementById('curl-example').textContent = buildCurl();
-    });
-    document.getElementById('turl').addEventListener('input', () => {
-      document.getElementById('curl-example').textContent = buildCurl();
-    });
+    document.getElementById('endpoint').addEventListener('change', () => { document.getElementById('curl-example').textContent = buildCurl(); });
+    document.getElementById('turl').addEventListener('input', () => { document.getElementById('curl-example').textContent = buildCurl(); });
     document.getElementById('curl-example').textContent = buildCurl();
 
-    async function runTest() {
+    document.getElementById('btn-test').addEventListener('click', async () => {
       const ep = document.getElementById('endpoint').value;
       const url = document.getElementById('turl').value.trim();
       const btn = document.getElementById('btn-test');
       const out = document.getElementById('test-result');
       btn.disabled = true;
       btn.textContent = 'Mengirim...';
-      out.innerHTML = '<p style="color:#94a3b8">Memproses...</p>';
+      out.innerHTML = '<p style="color:#8b93a7">Memproses...</p>';
       try {
         let res;
         if (ep === 'download') {
@@ -116,9 +173,8 @@
           res = await fetch(API_BASE_JS + '/api/' + ep + '?url=' + encodeURIComponent(url));
         }
         const body = await res.json();
-        const cls = res.ok ? 'status-2xx' : 'status-other';
         out.innerHTML =
-          '<p style="margin-bottom:0.5rem"><span class="status-badge ' + cls + '">HTTP ' + res.status + '</span></p>' +
+          '<span class="sb ' + (res.ok ? 'ok' : 'bad') + '">HTTP ' + res.status + '</span>' +
           '<pre>' + escapeHtml(JSON.stringify(body, null, 2)) + '</pre>';
       } catch (e) {
         out.innerHTML = '<pre style="color:#fca5a5">Error: ' + escapeHtml(e.message) + '</pre>';
@@ -126,7 +182,7 @@
         btn.disabled = false;
         btn.textContent = 'Kirim Request';
       }
-    }
+    });
 
     function escapeHtml(s) {
       return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
