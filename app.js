@@ -4,10 +4,24 @@ const form = document.getElementById('dl-form');
 const urlInput = document.getElementById('url');
 const btnSubmit = document.getElementById('btn-submit');
 const btnMp3 = document.getElementById('btn-mp3');
+const btnPaste = document.getElementById('btn-paste');
+const btnLabel = document.getElementById('btn-label');
 const resultBox = document.getElementById('result');
 const errorBox = document.getElementById('error');
 
 let lastPayload = null;
+
+if (btnPaste) {
+  btnPaste.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) urlInput.value = text.trim();
+    } catch {
+      btnPaste.textContent = 'Blokir!';
+      setTimeout(() => (btnPaste.textContent = '📋'), 1500);
+    }
+  });
+}
 
 function detectPlatform(url) {
   try {
@@ -72,7 +86,7 @@ function showError(msg) {
 
 function showLoading() {
   btnSubmit.disabled = true;
-  btnSubmit.textContent = 'Memproses...';
+  btnLabel.innerHTML = '<span class="spinner"></span>';
   showError('Memproses link, mohon tunggu beberapa detik...');
 }
 
@@ -91,7 +105,7 @@ async function fetchAndRender(endpoint, url, audioOnly) {
     showError(err.message);
   } finally {
     btnSubmit.disabled = false;
-    btnSubmit.textContent = 'Download';
+    btnLabel.textContent = 'Download';
   }
 }
 
