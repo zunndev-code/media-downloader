@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Downloader - Download Video IG, FB, TikTok, X, YouTube</title>
+  <meta name="description" content="Download video dan audio gratis dari Instagram, Facebook, TikTok, X (Twitter), dan YouTube tanpa login.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Media<span>Downloader</span></h1>
+    <p>Download video &amp; audio dari Instagram, Facebook, TikTok, X, dan YouTube — gratis, tanpa login.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <form id="dl-form">
+        <input type="url" id="url" name="url" placeholder="Tempel link di sini..." required>
+        <div class="buttons">
+          <button type="submit" class="btn primary" id="btn-submit">Download</button>
+          <button type="button" class="btn" data-type="mp3" title="Ekstrak audio jadi MP3">MP3</button>
+        </div>
+      </form>
+      <div class="platforms">
+        <span class="tag yt">YouTube</span>
+        <span class="tag ig">Instagram</span>
+        <span class="tag fb">Facebook</span>
+        <span class="tag tt">TikTok</span>
+        <span class="tag x">X / Twitter</span>
+      </div>
+    </section>
+
+    <section id="result" class="card hidden">
+      <div class="result-head">
+        <img id="thumb" alt="thumbnail" onerror="this.style.display='none'">
+        <div class="result-info">
+          <h2 id="title"></h2>
+          <p id="meta"></p>
+        </div>
+      </div>
+      <div id="links"></div>
+    </section>
+
+    <section id="error" class="card error hidden">
+      <p id="error-text"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>API: 20 request/menit per IP. Jika error, coba lagi beberapa saat.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
