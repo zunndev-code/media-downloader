@@ -3,34 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Media Downloader - Download Video YouTube, Instagram, Facebook, TikTok, X</title>
-  <meta name="description" content="Download video dan audio gratis dari YouTube, Instagram, Facebook, TikTok, dan X (Twitter). Cepat, gratis, tanpa login.">
+  <title>Media Downloader — Download video dari YouTube, Instagram, Facebook, TikTok, X</title>
+  <meta name="description" content="Download video dan audio dari YouTube, Instagram, Facebook, TikTok, dan X (Twitter). Gratis, tanpa login.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬇️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/></svg>">
 </head>
 <body>
   <header>
-    <div class="logo"><span class="mark">⬇️</span>Media<em>Downloader</em></div>
-    <nav><a href="test.html">API Docs</a></nav>
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Media Downloader
+    </div>
+    <nav>
+      <a href="#cara">Cara pakai</a>
+      <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">API Docs</a>
+    </nav>
   </header>
 
-  <div class="wrap">
+  <main class="wrap">
     <section class="hero">
-      <span class="badge"><span class="pulse"></span> Gratis · Tanpa Login · Tanpa Watermark</span>
-      <h1>Download Video &amp; Musik dari <em>Semua Platform</em></h1>
-      <p>YouTube, Instagram, Facebook, TikTok, X — tempel link, klik download, selesai.</p>
+      <p class="kicker">Gratis — tanpa login — tanpa watermark</p>
+      <h1>Download video &amp; musik <span class="dim">dari mana saja.</span></h1>
+      <p>YouTube, Instagram, Facebook, TikTok, X (Twitter). Tempel link, pilih kualitas, selesai.</p>
 
       <form id="dl-form" class="search">
-        <span class="globe">🔗</span>
-        <input type="url" id="url" placeholder="Tempel link video di sini..." required autocomplete="off">
-        <button type="button" class="paste-btn" id="btn-paste" title="Tempel dari clipboard">📋</button>
+        <input type="url" id="url" placeholder="Tempel link video..." required autocomplete="off">
+        <button type="button" class="paste-btn" id="btn-paste" title="Tempel dari clipboard">⧉</button>
         <button type="submit" id="btn-submit"><span id="btn-label">Download</span></button>
       </form>
 
-      <div class="audio-row">
-        <button type="button" id="btn-mp3">🎵 Konversi ke MP3</button>
+      <div class="actions">
+        <button type="button" class="ghost-btn" id="btn-mp3">Konversi ke MP3</button>
+        <span class="hint">60 request/menit per IP</span>
       </div>
 
       <div class="platforms">
@@ -54,30 +60,30 @@
     </section>
 
     <section id="error" class="alert hidden">
-      <span>⚠️</span><p id="error-text"></p>
+      <span>!</span><p id="error-text"></p>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="cara">
       <div class="step">
-        <div class="n">1</div>
-        <h3>Salin Link</h3>
-        <p>Tekan tombol bagikan di aplikasi, pilih "Salin tautan"</p>
+        <p class="n">Langkah 01</p>
+        <h3>Salin link</h3>
+        <p>Tekan tombol bagikan di aplikasi, pilih "salin tautan".</p>
       </div>
       <div class="step">
-        <div class="n">2</div>
-        <h3>Tempel &amp; Download</h3>
-        <p>Tempel link di kotak di atas, klik tombol Download</p>
+        <p class="n">Langkah 02</p>
+        <h3>Tempel &amp; download</h3>
+        <p>Tempel link di kotak di atas, klik Download.</p>
       </div>
       <div class="step">
-        <div class="n">3</div>
+        <p class="n">Langkah 03</p>
         <h3>Simpan</h3>
-        <p>Pilih kualitas video atau MP3 yang kamu mau</p>
+        <p>Pilih kualitas video atau MP3 yang kamu mau.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   <footer>
-    <p>Media Downloader &mdash; gratis, tanpa login &middot; Rate limit 20 request/menit per IP &middot; <a href="test.html" style="color:#818cf8;text-decoration:none">API Docs</a></p>
+    <p>Media Downloader &middot; <a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">API docs</a> &middot; <a href="https://zunndev.my.id/api/openapi.json" target="_blank" rel="noopener">OpenAPI</a></p>
   </footer>
 
   <script src="app.js"></script>

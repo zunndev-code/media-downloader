@@ -1,4 +1,4 @@
-const API_BASE = 'https://mediaapi-99cc9.containers.snapdeploy.app';
+const API_BASE = 'https://zunndev.my.id';
 
 const form = document.getElementById('dl-form');
 const urlInput = document.getElementById('url');

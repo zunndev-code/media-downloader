@@ -3,147 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Docs - Media Downloader</title>
+  <title>API Docs — Media Downloader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     .ep {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.7rem 0;
+      gap: 1rem;
+      padding: 0.8rem 0;
       border-bottom: 1px solid var(--border);
       font-size: 0.85rem;
     }
-    .ep code { color: #c7d2fe; font-size: 0.8rem; }
+    .ep:last-child { border-bottom: none; }
+    .ep code { color: var(--text); font-size: 0.82rem; }
     .m {
       display: inline-block;
-      padding: 0.1rem 0.5rem;
-      border-radius: 6px;
-      font-weight: 800;
+      width: 52px;
+      text-align: center;
+      padding: 0.12rem 0.4rem;
+      border-radius: 5px;
+      font-weight: 700;
       font-size: 0.68rem;
-      margin-right: 0.5rem;
-      color: #0b0f1a;
+      margin-right: 0.6rem;
+      color: #09090b;
     }
     .m.post { background: #4ade80; }
-    .m.get { background: #38bdf8; }
+    .m.get { background: #60a5fa; }
+    .field { width: 100%; margin-bottom: 0.8rem; }
     select, input {
       width: 100%;
-      padding: 0.8rem 0.9rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg);
+      padding: 0.6rem 0.75rem;
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: var(--panel-2);
       color: var(--text);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-family: inherit;
-      margin-bottom: 0.75rem;
       outline: none;
     }
-    select:focus, input:focus { border-color: var(--accent); }
+    select:focus, input:focus { border-color: var(--muted-2); }
     .row2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.75rem; }
-    @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
     .btn {
       border: none;
       cursor: pointer;
-      background: var(--grad);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.9rem;
+      background: var(--accent);
+      color: #09090b;
+      font-weight: 600;
+      font-size: 0.88rem;
       font-family: inherit;
-      padding: 0.85rem 2rem;
-      border-radius: 12px;
+      padding: 0.65rem 1.4rem;
+      border-radius: 9px;
       width: 100%;
-      transition: filter 0.2s, transform 0.1s;
+      transition: opacity 0.15s;
     }
-    .btn:hover { filter: brightness(1.12); }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.5; cursor: wait; }
     .curl {
-      background: var(--bg);
+      background: var(--panel-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem;
-      font-size: 0.72rem;
-      font-family: monospace;
-      color: #86efac;
+      border-radius: 9px;
+      padding: 0.8rem;
+      font-size: 0.75rem;
+      font-family: ui-monospace, monospace;
+      color: #a1a1aa;
       overflow-x: auto;
       white-space: pre-wrap;
       word-break: break-word;
       margin-bottom: 1rem;
     }
     pre {
-      background: var(--bg);
+      background: var(--panel-2);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 9px;
       padding: 1rem;
       overflow-x: auto;
       font-size: 0.75rem;
-      line-height: 1.5;
-      color: #a5b4fc;
+      line-height: 1.55;
+      color: #a1a1aa;
       white-space: pre-wrap;
       word-break: break-word;
       max-height: 420px;
       overflow-y: auto;
     }
-    .sb { font-weight: 800; padding: 0.15rem 0.6rem; border-radius: 6px; font-size: 0.78rem; margin-bottom: 0.75rem; display: inline-block; }
-    .sb.ok { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-    .sb.bad { background: rgba(255, 77, 141, 0.15); color: #ffb3cc; }
-    h2 { font-size: 1.05rem; margin-bottom: 0.75rem; }
+    .sb { font-weight: 600; padding: 0.15rem 0.6rem; border-radius: 5px; font-size: 0.78rem; margin-bottom: 0.75rem; display: inline-block; border: 1px solid var(--border-strong); }
+    h2 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.9rem; }
+    .doc-link { font-size: 0.85rem; }
+    .doc-link a { color: var(--text); }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">Media<em>Downloader</em></div>
-    <nav><a href="index.html">&larr; Downloader</a></nav>
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Media Downloader
+    </div>
+    <nav>
+      <a href="index.html">&larr; Downloader</a>
+    </nav>
   </header>
 
-  <div class="wrap">
-    <section class="card" style="text-align:center">
-      <p style="color:#8b93a7;font-size:0.85rem">Dokumentasi interaktif lengkap dengan tombol "Try it out":</p>
-      <a href="https://mediaapi-99cc9.containers.snapdeploy.app/api/docs" target="_blank" rel="noopener" style="color:#c7d2fe;font-weight:700;text-decoration:none;border-bottom:1px solid #7c5cff">Buka Swagger UI Docs &rarr;</a>
+  <main class="wrap">
+    <section class="card">
+      <h2>Endpoint</h2>
+      <div class="ep"><span><span class="m post">POST</span><code>/api/download</code></span><span style="color:#565b64">deteksi otomatis</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/download?url=...</code></span><span style="color:#565b64">query param</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/yt?url=...</code></span><span style="color:#565b64">YouTube</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/ig?url=...</code></span><span style="color:#565b64">Instagram</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/fb?url=...</code></span><span style="color:#565b64">Facebook</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/tt?url=...</code></span><span style="color:#565b64">TikTok</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/x?url=...</code></span><span style="color:#565b64">X / Twitter</span></div>
+      <div class="ep"><span><span class="m get">GET</span><code>/api/mp3?url=...</code></span><span style="color:#565b64">audio MP3</span></div>
+      <p class="doc-link" style="margin-top:1rem"><a href="https://zunndev.my.id/api/docs" target="_blank" rel="noopener">Dokumentasi interaktif (Swagger UI) &rarr;</a></p>
     </section>
 
     <section class="card">
-      <h2>REST API Endpoint</h2>
-      <div class="ep"><span><span class="m post">POST</span><code>/api/download</code></span><span style="color:#8b93a7">deteksi otomatis</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/download?url=...</code></span><span style="color:#8b93a7">query param</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/yt?url=...</code></span><span style="color:#8b93a7">YouTube</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/ig?url=...</code></span><span style="color:#8b93a7">Instagram</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/fb?url=...</code></span><span style="color:#8b93a7">Facebook</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/tt?url=...</code></span><span style="color:#8b93a7">TikTok</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/x?url=...</code></span><span style="color:#8b93a7">X / Twitter</span></div>
-      <div class="ep"><span><span class="m get">GET</span><code>/api/mp3?url=...</code></span><span style="color:#8b93a7">audio MP3</span></div>
-    </section>
-
-    <section class="card">
-      <h2>Uji Coba Langsung</h2>
+      <h2>Uji coba</h2>
       <div class="row2">
-        <select id="endpoint">
-          <option value="download">POST /api/download</option>
-          <option value="yt">GET /api/yt</option>
-          <option value="ig">GET /api/ig</option>
-          <option value="fb">GET /api/fb</option>
-          <option value="tt">GET /api/tt</option>
-          <option value="x">GET /api/x</option>
-          <option value="mp3">GET /api/mp3</option>
-        </select>
-        <input type="url" id="turl" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <div class="field">
+          <select id="endpoint">
+            <option value="download">POST /api/download</option>
+            <option value="yt">GET /api/yt</option>
+            <option value="ig">GET /api/ig</option>
+            <option value="fb">GET /api/fb</option>
+            <option value="tt">GET /api/tt</option>
+            <option value="x">GET /api/x</option>
+            <option value="mp3">GET /api/mp3</option>
+          </select>
+        </div>
+        <div class="field">
+          <input type="url" id="turl" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        </div>
       </div>
-      <button class="btn" id="btn-test">Kirim Request</button>
+      <button class="btn" id="btn-test">Kirim request</button>
       <p class="curl" id="curl-example" style="margin-top:0.9rem"></p>
       <div id="test-result">
-        <p style="color:#8b93a7;font-size:0.8rem">Belum ada request.</p>
+        <p style="color:#565b64;font-size:0.8rem">Belum ada request.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   <footer>
-    <p>Media Downloader API &mdash; 20 request/menit per IP.</p>
+    <p>Media Downloader API &middot; 60 request/menit per IP</p>
   </footer>
 
   <script>
-    const API_BASE_JS = 'https://mediaapi-99cc9.containers.snapdeploy.app';
+    const API_BASE_JS = 'https://zunndev.my.id';
 
     function buildCurl() {
       const ep = document.getElementById('endpoint').value;
@@ -165,7 +172,7 @@
       const out = document.getElementById('test-result');
       btn.disabled = true;
       btn.textContent = 'Mengirim...';
-      out.innerHTML = '<p style="color:#8b93a7">Memproses...</p>';
+      out.innerHTML = '<p style="color:#565b64">Memproses...</p>';
       try {
         let res;
         if (ep === 'download') {
@@ -179,13 +186,13 @@
         }
         const body = await res.json();
         out.innerHTML =
-          '<span class="sb ' + (res.ok ? 'ok' : 'bad') + '">HTTP ' + res.status + '</span>' +
+          '<span class="sb">HTTP ' + res.status + '</span>' +
           '<pre>' + escapeHtml(JSON.stringify(body, null, 2)) + '</pre>';
       } catch (e) {
-        out.innerHTML = '<pre style="color:#fca5a5">Error: ' + escapeHtml(e.message) + '</pre>';
+        out.innerHTML = '<pre style="color:#f87171">Error: ' + escapeHtml(e.message) + '</pre>';
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Kirim Request';
+        btn.textContent = 'Kirim request';
       }
     });
 
