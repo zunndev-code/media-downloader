@@ -73,9 +73,12 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const res = await fetch(API_BASE + '/api/' + endpoint + '?url=' + encodeURIComponent(url));
-    const data = await res.json();
-    if (!res.ok || data.status === 'error') throw new Error(data.error || 'Gagal memproses link.');
-    render(data, type === 'mp3');
+    const body = await res.json();
+    if (!res.ok || body.status !== 'success') {
+      const e = body.error || {};
+      throw new Error(e.message || 'Gagal memproses link.');
+    }
+    render(body.data, type === 'mp3');
   } catch (err) {
     showError(err.message);
   } finally {

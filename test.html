@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test API - Media Downloader API</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    nav { display: flex; gap: 1rem; justify-content: center; padding: 1rem 0 0; }
+    nav a { color: #818cf8; text-decoration: none; font-weight: 600; }
+    nav a:hover { text-decoration: underline; }
+    .method { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 6px; font-weight: 800; font-size: 0.75rem; margin-right: 0.5rem; }
+    .method.post { background: #4ade80; color: #0f172a; }
+    .method.get { background: #38bdf8; color: #0f172a; }
+    .endpoint-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(148,163,184,0.15); font-size: 0.9rem; }
+    .endpoint-row code { color: #c7d2fe; }
+    select, textarea { width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid #475569; background: #1e293b; color: #f1f5f9; font-size: 0.95rem; font-family: inherit; margin-bottom: 0.75rem; }
+    textarea { min-height: 60px; resize: vertical; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+    pre { background: #0f172a; border: 1px solid rgba(148,163,184,0.2); border-radius: 10px; padding: 1rem; overflow-x: auto; font-size: 0.8rem; line-height: 1.5; color: #a5b4fc; white-space: pre-wrap; word-break: break-word; }
+    .curl { background: #1e293b; color: #86efac; font-size: 0.78rem; }
+    .status-badge { font-weight: 800; padding: 0.15rem 0.6rem; border-radius: 6px; font-size: 0.8rem; }
+    .status-2xx { background: #14532d; color: #4ade80; }
+    .status-other { background: #7f1d1d; color: #fca5a5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Test <span>API</span></h1>
+    <p>Uji endpoint REST Media Downloader langsung dari sini.</p>
+  </header>
+  <nav>
+    <a href="index.html">&larr; Kembali ke Downloader</a>
+  </nav>
+
+  <main>
+    <section class="card">
+      <h2 style="margin-bottom:0.75rem">Dokumentasi Endpoint</h2>
+      <div class="endpoint-row"><span><span class="method post">POST</span><code>/api/download</code></span><span>deteksi platform otomatis</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/download?url=...</code></span><span>sama, via query</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/yt?url=...</code></span><span>YouTube</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/ig?url=...</code></span><span>Instagram</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/fb?url=...</code></span><span>Facebook</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/tt?url=...</code></span><span>TikTok</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/x?url=...</code></span><span>X / Twitter</span></div>
+      <div class="endpoint-row"><span><span class="method get">GET</span><code>/api/mp3?url=...</code></span><span>ekstrak audio</span></div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-bottom:0.75rem">Uji Coba</h2>
+      <div class="row2">
+        <select id="endpoint">
+          <option value="download">POST /api/download</option>
+          <option value="yt">GET /api/yt</option>
+          <option value="ig">GET /api/ig</option>
+          <option value="fb">GET /api/fb</option>
+          <option value="tt">GET /api/tt</option>
+          <option value="x">GET /api/x</option>
+          <option value="mp3">GET /api/mp3</option>
+        </select>
+        <input type="url" id="turl" placeholder="https://youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+      </div>
+      <div class="buttons">
+        <button class="btn primary" id="btn-test" onclick="runTest()">Kirim Request</button>
+      </div>
+      <p class="curl" id="curl-example" style="margin-top:0.75rem;padding:0.6rem 0.8rem;border-radius:8px"></p>
+      <div id="test-result">
+        <p style="color:#94a3b8;font-size:0.85rem">Belum ada request. Klik "Kirim Request".</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>API: 20 request/menit per IP.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    const API_BASE_JS = 'https://mediaapi-99cc9.containers.snapdeploy.app';
+
+    function buildCurl() {
+      const ep = document.getElementById('endpoint').value;
+      const url = document.getElementById('turl').value.trim();
+      if (ep === 'download') {
+        return 'curl -X POST ' + API_BASE_JS + '/api/download \\\n  -H "Content-Type: application/json" \\\n  -d \'{"url": "' + url + '"}\'';
+      }
+      return 'curl "' + API_BASE_JS + '/api/' + ep + '?url=' + encodeURIComponent(url) + '"';
+    }
+
+    document.getElementById('endpoint').addEventListener('change', () => {
+      document.getElementById('curl-example').textContent = buildCurl();
+    });
+    document.getElementById('turl').addEventListener('input', () => {
+      document.getElementById('curl-example').textContent = buildCurl();
+    });
+    document.getElementById('curl-example').textContent = buildCurl();
+
+    async function runTest() {
+      const ep = document.getElementById('endpoint').value;
+      const url = document.getElementById('turl').value.trim();
+      const btn = document.getElementById('btn-test');
+      const out = document.getElementById('test-result');
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+      out.innerHTML = '<p style="color:#94a3b8">Memproses...</p>';
+      try {
+        let res;
+        if (ep === 'download') {
+          res = await fetch(API_BASE_JS + '/api/download', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url }),
+          });
+        } else {
+          res = await fetch(API_BASE_JS + '/api/' + ep + '?url=' + encodeURIComponent(url));
+        }
+        const body = await res.json();
+        const cls = res.ok ? 'status-2xx' : 'status-other';
+        out.innerHTML =
+          '<p style="margin-bottom:0.5rem"><span class="status-badge ' + cls + '">HTTP ' + res.status + '</span></p>' +
+          '<pre>' + escapeHtml(JSON.stringify(body, null, 2)) + '</pre>';
+      } catch (e) {
+        out.innerHTML = '<pre style="color:#fca5a5">Error: ' + escapeHtml(e.message) + '</pre>';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Kirim Request';
+      }
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+</body>
+</html>
